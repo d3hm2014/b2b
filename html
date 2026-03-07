@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SupplyGate | منصة موحدة لإدارة المشتريات بين الشركات والموردين</title>
+  <meta
+    name="description"
+    content="SupplyGate منصة B2B موحدة تربط الشركات بالموردين لإدارة الشراء المباشر، طلبات عروض الأسعار، المناقصات، والسوق الإلكتروني من مكان واحد."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --bg-soft:#f4f8ff;
+      --bg-soft-2:#eef5ff;
+      --card:#ffffff;
+      --navy:#0d1f3c;
+      --blue:#1a6fd4;
+      --blue-dark:#0f4fa3;
+      --blue-light:#3b9eff;
+      --text:#10233f;
+      --text-2:#48607e;
+      --text-3:#7c95b3;
+      --border:rgba(26,111,212,0.12);
+      --border-2:rgba(26,111,212,0.22);
+      --success:#1cb87e;
+      --shadow:0 10px 35px rgba(16,35,63,0.08);
+      --shadow-lg:0 18px 55px rgba(16,35,63,0.12);
+      --radius:18px;
+      --radius-sm:12px;
+      --container:1200px;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Cairo',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.8;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(26,111,212,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,111,212,0.03) 1px, transparent 1px);
+      background-size:64px 64px;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    img{
+      max-width:100%;
+      display:block;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .container{
+      width:min(var(--container), 92%);
+      margin-inline:auto;
+      position:relative;
+      z-index:1;
+    }
+
+    .section{
+      padding:100px 0;
+      position:relative;
+      z-index:1;
+    }
+
+    .section-soft{
+      background:var(--bg-soft);
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 16px;
+      border-radius:999px;
+      background:rgba(26,111,212,0.08);
+      border:1px solid rgba(26,111,212,0.16);
+      color:var(--blue);
+      font-size:.85rem;
+      font-weight:700;
+      margin-bottom:18px;
+    }
+
+    .tag .dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--success);
+    }
+
+    .section-head{
+      max-width:760px;
+      margin:0 auto 48px;
+      text-align:center;
+    }
+
+    .section-head.left{
+      text-align:right;
+      margin-inline:0;
+    }
+
+    .section-head h2{
+      font-family:'Tajawal',sans-serif;
+      font-size:clamp(2rem, 4vw, 3rem);
+      line-height:1.25;
+      color:var(--navy);
+      margin-bottom:14px;
+      font-weight:900;
+    }
+
+    .section-head p{
+      color:var(--text-2);
+      font-size:1.02rem;
+    }
+
+    /* NAV */
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(255,255,255,0.88);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--border);
+    }
+
+    .nav-inner{
+      width:min(var(--container), 92%);
+      margin-inline:auto;
+      min-height:78px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      font-weight:800;
+      color:var(--navy);
+    }
+
+    .brand-mark{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      background:linear-gradient(135deg, var(--blue-dark), var(--blue-light));
+      display:grid;
+      place-items:center;
+      color:#fff;
+      box-shadow:0 10px 25px rgba(26,111,212,0.28);
+      font-weight:900;
+      font-family:'Tajawal',sans-serif;
+      font-size:1rem;
+    }
+
+    .brand-text small{
+      display:block;
+      color:var(--text-3);
+      font-size:.75rem;
+      font-weight:700;
+      line-height:1.2;
+    }
+
+    .brand-text strong{
+      display:block;
+      font-size:1.1rem;
+      line-height:1.2;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:26px;
+      list-style:none;
+    }
+
+    .nav-links a{
+      color:var(--text-2);
+      font-weight:600;
+      font-size:.95rem;
+      transition:.2s ease;
+    }
+
+    .nav-links a:hover{
+      color:var(--blue);
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      border:none;
+      cursor:pointer;
+      border-radius:12px;
+      padding:14px 22px;
+      font-family:'Cairo',sans-serif;
+      font-size:.96rem;
+      font-weight:800;
+      transition:.25s ease;
+      white-space:nowrap;
+    }
+
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(135deg, var(--blue-dark), var(--blue));
+      box-shadow:0 12px 24px rgba(26,111,212,0.22);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 35px rgba(26,111,212,0.3);
+    }
+
+    .btn-secondary{
+      background:#fff;
+      color:var(--blue);
+      border:1px solid var(--border-2);
+    }
+
+    .btn-secondary:hover{
+      background:var(--bg-soft-2);
+    }
+
+    /* HERO */
+    .hero{
+      padding:90px 0 70px;
+      background:
+        radial-gradient(circle at 75% 20%, rgba(59,158,255,0.12), transparent 30%),
+        radial-gradient(circle at 15% 10%, rgba(26,111,212,0.10), transparent 25%),
+        linear-gradient(180deg, #ffffff 0%, #f8fbff 55%, #eef5ff 100%);
+      overflow:hidden;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:42px;
+      align-items:center;
+    }
+
+    .hero-copy h1{
+      font-family:'Tajawal',sans-serif;
+      font-size:clamp(2.6rem, 5vw, 4.3rem);
+      line-height:1.15;
+      color:var(--navy);
+      font-weight:900;
+      margin-bottom:18px;
+    }
+
+    .hero-copy h1 .accent{
+      color:var(--blue);
+    }
+
+    .hero-copy p{
+      font-size:1.08rem;
+      color:var(--text-2);
+      max-width:680px;
+      margin-bottom:28px;
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:12px;
+      margin:26px 0 34px;
+      list-style:none;
+    }
+
+    .hero-points li{
+      background:rgba(255,255,255,0.75);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:14px 16px;
+      color:var(--text);
+      font-weight:700;
+      box-shadow:var(--shadow);
+    }
+
+    .hero-cta{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .hero-note{
+      margin-top:18px;
+      color:var(--text-3);
+      font-size:.93rem;
+      font-weight:600;
+    }
+
+    .hero-visual{
+      position:relative;
+    }
+
+    .orb{
+      position:absolute;
+      border-radius:50%;
+      filter:blur(12px);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .orb.one{
+      width:220px;
+      height:220px;
+      background:rgba(59,158,255,0.18);
+      top:-35px;
+      left:-30px;
+    }
+
+    .orb.two{
+      width:160px;
+      height:160px;
+      background:rgba(26,111,212,0.16);
+      bottom:-10px;
+      right:-10px;
+    }
+
+    .dashboard{
+      position:relative;
+      z-index:1;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:26px;
+      box-shadow:var(--shadow-lg);
+      overflow:hidden;
+    }
+
+    .dashboard-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px 18px;
+      border-bottom:1px solid var(--border);
+      background:#fbfdff;
+    }
+
+    .dashboard-dots{
+      display:flex;
+      gap:8px;
+    }
+
+    .dashboard-dots span{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#d9e6f6;
+    }
+
+    .dashboard-top small{
+      color:var(--text-3);
+      font-weight:700;
+    }
+
+    .dashboard-body{
+      padding:18px;
+      display:grid;
+      gap:16px;
+      background:
+        linear-gradient(180deg, rgba(238,245,255,.65), rgba(255,255,255,1));
+    }
+
+    .mock-cards{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:12px;
+    }
+
+    .mini-card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      box-shadow:0 8px 20px rgba(16,35,63,0.05);
+    }
+
+    .mini-card strong{
+      display:block;
+      font-size:.88rem;
+      color:var(--navy);
+      margin-bottom:8px;
+    }
+
+    .mini-card span{
+      display:block;
+      color:var(--text-3);
+      font-size:.82rem;
+    }
+
+    .table-mock{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:18px;
+      overflow:hidden;
+    }
+
+    .table-row{
+      display:grid;
+      grid-template-columns:1.2fr 1fr 1fr .8fr;
+      gap:10px;
+      padding:14px 16px;
+      border-bottom:1px solid #eef4fb;
+      align-items:center;
+      font-size:.9rem;
+    }
+
+    .table-row:last-child{
+      border-bottom:none;
+    }
+
+    .table-row.head{
+      background:#f7fbff;
+      color:var(--navy);
+      font-weight:800;
+    }
+
+    .badge-status{
+      display:inline-flex;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:.78rem;
+      font-weight:800;
+      width:fit-content;
+    }
+
+    .status-open{
+      background:rgba(28,184,126,.12);
+      color:#0b8c5b;
+    }
+
+    .status-review{
+      background:rgba(26,111,212,.10);
+      color:var(--blue);
+    }
+
+    /* PROBLEM / SOLUTION */
+    .split{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:24px;
+    }
+
+    .panel{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:30px;
+      box-shadow:var(--shadow);
+    }
+
+    .panel h3{
+      font-family:'Tajawal',sans-serif;
+      font-size:1.45rem;
+      margin-bottom:16px;
+      color:var(--navy);
+      font-weight:900;
+    }
+
+    .panel ul{
+      list-style:none;
+      display:grid;
+      gap:14px;
+    }
+
+    .panel li{
+      background:#f9fbff;
+      border:1px solid #edf3fb;
+      border-radius:14px;
+      padding:14px 16px;
+      color:var(--text-2);
+      font-weight:600;
+    }
+
+    .panel.problem{
+      border-color:rgba(220,38,38,.10);
+    }
+
+    .panel.problem li::before{
+      content:"✕";
+      margin-left:10px;
+      color:#dc2626;
+      font-weight:900;
+    }
+
+    .panel.solution li::before{
+      content:"✓";
+      margin-left:10px;
+      color:var(--success);
+      font-weight:900;
+    }
+
+    /* FEATURES */
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:22px;
+    }
+
+    .feature-card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      transition:.25s ease;
+    }
+
+    .feature-card:hover{
+      transform:translateY(-4px);
+      box-shadow:var(--shadow-lg);
+      border-color:var(--border-2);
+    }
+
+    .icon{
+      width:56px;
+      height:56px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:rgba(26,111,212,.09);
+      color:var(--blue);
+      font-size:1.4rem;
+      margin-bottom:18px;
+      font-weight:900;
+    }
+
+    .feature-card h3{
+      font-family:'Tajawal',sans-serif;
+      font-size:1.16rem;
+      color:var(--navy);
+      margin-bottom:10px;
+      font-weight:900;
+    }
+
+    .feature-card p{
+      color:var(--text-2);
+      font-size:.95rem;
+    }
+
+    /* FLOW */
+    .flow{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:20px;
+      position:relative;
+    }
+
+    .flow-step{
+      text-align:center;
+      position:relative;
+      z-index:1;
+    }
+
+    .flow-num{
+      width:72px;
+      height:72px;
+      margin:0 auto 16px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:#fff;
+      border:2px solid var(--blue);
+      color:var(--blue);
+      font-family:'Tajawal',sans-serif;
+      font-weight:900;
+      font-size:1.4rem;
+      box-shadow:0 0 0 8px rgba(26,111,212,0.08);
+    }
+
+    .flow-step h3{
+      font-family:'Tajawal',sans-serif;
+      color:var(--navy);
+      font-size:1.06rem;
+      margin-bottom:8px;
+      font-weight:900;
+    }
+
+    .flow-step p{
+      color:var(--text-2);
+      font-size:.92rem;
+    }
+
+    /* AUDIENCE */
+    .audience-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:22px;
+    }
+
+    .audience-card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:28px;
+      box-shadow:var(--shadow);
+    }
+
+    .audience-card h3{
+      font-family:'Tajawal',sans-serif;
+      font-size:1.22rem;
+      color:var(--navy);
+      margin-bottom:12px;
+      font-weight:900;
+    }
+
+    .audience-card ul{
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+
+    .audience-card li{
+      color:var(--text-2);
+      font-weight:600;
+      background:#f9fbff;
+      border:1px solid #edf3fb;
+      border-radius:12px;
+      padding:12px 14px;
+    }
+
+    /* TRUST */
+    .trust-wrap{
+      background:linear-gradient(135deg, #0f4fa3, #1a6fd4);
+      border-radius:28px;
+      padding:42px;
+      color:#fff;
+      box-shadow:var(--shadow-lg);
+    }
+
+    .trust-head{
+      max-width:760px;
+      margin-bottom:28px;
+    }
+
+    .trust-head h2{
+      font-family:'Tajawal',sans-serif;
+      font-size:clamp(2rem, 4vw, 2.8rem);
+      line-height:1.25;
+      margin-bottom:12px;
+      font-weight:900;
+    }
+
+    .trust-head p{
+      color:rgba(255,255,255,0.82);
+    }
+
+    .trust-grid{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:18px;
+    }
+
+    .trust-item{
+      background:rgba(255,255,255,0.10);
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:18px;
+      padding:22px;
+      backdrop-filter:blur(6px);
+    }
+
+    .trust-item h3{
+      font-size:1rem;
+      margin-bottom:8px;
+      font-weight:800;
+    }
+
+    .trust-item p{
+      font-size:.9rem;
+      color:rgba(255,255,255,0.82);
+    }
+
+    /* PREVIEW */
+    .preview-box{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:18px;
+      box-shadow:var(--shadow-lg);
+    }
+
+    .preview-placeholder{
+      min-height:430px;
+      border-radius:20px;
+      border:2px dashed rgba(26,111,212,0.25);
+      background:
+        linear-gradient(180deg, rgba(238,245,255,.85), rgba(255,255,255,.95));
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:34px;
+    }
+
+    .preview-placeholder h3{
+      font-family:'Tajawal',sans-serif;
+      font-size:1.8rem;
+      color:var(--navy);
+      margin-bottom:8px;
+      font-weight:900;
+    }
+
+    .preview-placeholder p{
+      color:var(--text-2);
+      max-width:620px;
+    }
+
+    /* CTA */
+    .cta-box{
+      background:linear-gradient(135deg, #f7fbff 0%, #eef5ff 100%);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:44px;
+      box-shadow:var(--shadow);
+    }
+
+    .cta-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:30px;
+      align-items:center;
+    }
+
+    .cta-copy h2{
+      font-family:'Tajawal',sans-serif;
+      font-size:clamp(2rem, 4vw, 2.8rem);
+      line-height:1.25;
+      color:var(--navy);
+      margin-bottom:12px;
+      font-weight:900;
+    }
+
+    .cta-copy p{
+      color:var(--text-2);
+      margin-bottom:18px;
+    }
+
+    .cta-list{
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+
+    .cta-list li{
+      color:var(--text);
+      font-weight:700;
+    }
+
+    .cta-list li::before{
+      content:"•";
+      color:var(--blue);
+      margin-left:8px;
+      font-size:1.1rem;
+      font-weight:900;
+    }
+
+    .form{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:24px;
+      box-shadow:var(--shadow);
+      display:grid;
+      gap:14px;
+    }
+
+    .form h3{
+      font-family:'Tajawal',sans-serif;
+      font-size:1.3rem;
+      color:var(--navy);
+      margin-bottom:4px;
+      font-weight:900;
+    }
+
+    .field{
+      display:grid;
+      gap:8px;
+    }
+
+    .field label{
+      color:var(--text);
+      font-weight:700;
+      font-size:.92rem;
+    }
+
+    .field input,
+    .field textarea{
+      width:100%;
+      border:1px solid #dce8f6;
+      border-radius:12px;
+      padding:14px 14px;
+      font-family:'Cairo',sans-serif;
+      font-size:.95rem;
+      outline:none;
+      transition:.2s ease;
+      background:#fff;
+    }
+
+    .field input:focus,
+    .field textarea:focus{
+      border-color:var(--blue);
+      box-shadow:0 0 0 4px rgba(26,111,212,0.08);
+    }
+
+    .field textarea{
+      min-height:110px;
+      resize:vertical;
+    }
+
+    .form small{
+      color:var(--text-3);
+      font-size:.82rem;
+      font-weight:600;
+    }
+
+    /* FOOTER */
+    .footer{
+      background:#0c1d36;
+      color:#fff;
+      padding:34px 0;
+      margin-top:80px;
+    }
+
+    .footer-inner{
+      width:min(var(--container),92%);
+      margin-inline:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .footer p{
+      color:rgba(255,255,255,.72);
+      font-size:.9rem;
+    }
+
+    .footer-links{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .footer-links a{
+      color:rgba(255,255,255,.78);
+      font-weight:600;
+      font-size:.9rem;
+    }
+
+    .footer-links a:hover{
+      color:#fff;
+    }
+
+    /* REVEAL */
+    .reveal{
+      opacity:0;
+      transform:translateY(20px);
+      transition:all .7s ease;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:none;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:1100px){
+      .hero-grid,
+      .cta-grid,
+      .split,
+      .grid-3,
+      .audience-grid,
+      .trust-grid,
+      .flow{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .mock-cards{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:820px){
+      .nav-links{
+        display:none;
+      }
+
+      .hero-grid,
+      .cta-grid,
+      .split,
+      .grid-3,
+      .audience-grid,
+      .trust-grid,
+      .flow{
+        grid-template-columns:1fr;
+      }
+
+      .hero-points{
+        grid-template-columns:1fr;
+      }
+
+      .table-row{
+        grid-template-columns:1fr;
+      }
+
+      .nav-inner{
+        min-height:72px;
+      }
+
+      .section{
+        padding:78px 0;
+      }
+
+      .trust-wrap,
+      .cta-box{
+        padding:28px;
+      }
+
+      .dashboard-body{
+        padding:14px;
+      }
+
+      .preview-placeholder{
+        min-height:300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="#hero" class="brand">
+        <div class="brand-mark">SG</div>
+        <div class="brand-text">
+          <small>Smart Procurement Platform</small>
+          <strong>SupplyGate</strong>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#problem">التحديات</a></li>
+        <li><a href="#features">الحلول</a></li>
+        <li><a href="#workflow">كيف تعمل</a></li>
+        <li><a href="#preview">واجهة المنصة</a></li>
+        <li><a href="#contact">طلب عرض</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="#contact" class="btn btn-primary">اطلب عرضاً تجريبياً</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <div class="tag">
+          <span class="dot"></span>
+          منصة B2B قيد الإطلاق
+        </div>
+
+        <h1>
+          منصة موحدة لإدارة
+          <span class="accent">المشتريات بين الشركات والموردين</span>
+        </h1>
+
+        <p>
+          SupplyGate تجمع الشراء المباشر، طلبات عروض الأسعار، المناقصات، والسوق الإلكتروني
+          داخل منصة واحدة تساعد الشركات على تنظيم دورة الشراء، وتمنح الموردين قناة أوضح
+          للوصول إلى الفرص الشرائية.
+        </p>
+
+        <ul class="hero-points">
+          <li>مركزية كاملة لعمليات الشراء</li>
+          <li>مقارنة العروض بشكل أسرع وأوضح</li>
+          <li>إدارة الموردين والطلبات من لوحة واحدة</li>
+          <li>تجربة احترافية للشركات والموردين</li>
+        </ul>
+
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary">احجز عرضاً توضيحياً</a>
+          <a href="#preview" class="btn btn-secondary">شاهد تصور الواجهة</a>
+        </div>
+
+        <div class="hero-note">
+          مناسبة للشركات، المجموعات الشرائية، والجهات التي تبحث عن إدارة أكثر احترافية للمشتريات.
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="orb one"></div>
+        <div class="orb two"></div>
+
+        <div class="dashboard">
+          <div class="dashboard-top">
+            <div class="dashboard-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <small>SupplyGate Dashboard Preview</small>
+          </div>
+
+          <div class="dashboard-body">
+            <div class="mock-cards">
+              <div class="mini-card">
+                <strong>الطلبات المفتوحة</strong>
+                <span>إدارة طلبات الشراء الحالية</span>
+              </div>
+              <div class="mini-card">
+                <strong>طلبات عروض الأسعار</strong>
+                <span>استقبال عروض متعددة ومقارنتها</span>
+              </div>
+              <div class="mini-card">
+                <strong>الموردون النشطون</strong>
+                <span>متابعة الموردين وحالة الاعتماد</span>
+              </div>
+            </div>
+
+            <div class="table-mock">
+              <div class="table-row head">
+                <div>الفرصة الشرائية</div>
+                <div>الفئة</div>
+                <div>التاريخ</div>
+                <div>الحالة</div>
+              </div>
+              <div class="table-row">
+                <div>طلب توريد مستلزمات تشغيل</div>
+                <div>شراء مباشر</div>
+                <div>12 مارس 2026</div>
+                <div><span class="badge-status status-open">مفتوح</span></div>
+              </div>
+              <div class="table-row">
+                <div>طلب عرض سعر للأجهزة</div>
+                <div>RFQ</div>
+                <div>18 مارس 2026</div>
+                <div><span class="badge-status status-review">قيد المراجعة</span></div>
+              </div>
+              <div class="table-row">
+                <div>مناقصة توريد سنوية</div>
+                <div>مناقصة</div>
+                <div>24 مارس 2026</div>
+                <div><span class="badge-status status-open">مفتوح</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM / SOLUTION -->
+  <section class="section" id="problem">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>المشكلة ليست في الشراء فقط... بل في فوضى إدارة الشراء</h2>
+        <p>
+          كثير من الشركات لا تعاني من قلة الموردين، بل من تشتت العمليات بين الإيميل، الجداول،
+          المقارنات اليدوية، والمتابعة غير المركزية.
+        </p>
+      </div>
+
+      <div class="split">
+        <div class="panel problem reveal">
+          <h3>قبل SupplyGate</h3>
+          <ul>
+            <li>طلبات مشتريات موزعة بين الإيميلات والملفات</li>
+            <li>صعوبة جمع عروض الموردين ومقارنتها بشكل موحد</li>
+            <li>ضعف تتبع حالة الطلب من البداية حتى الترسية</li>
+            <li>غياب سوق إلكتروني موحد للشراء بين الشركات والموردين</li>
+            <li>إهدار وقت الفريق في أعمال تشغيلية متكررة</li>
+          </ul>
+        </div>
+
+        <div class="panel solution reveal">
+          <h3>مع SupplyGate</h3>
+          <ul>
+            <li>منصة موحدة لإدارة الشراء المباشر وطلبات العروض والمناقصات</li>
+            <li>تنظيم دورة الشراء من الطلب حتى الإسناد داخل واجهة واحدة</li>
+            <li>تجربة أوضح للموردين في استعراض الفرص وتقديم العروض</li>
+            <li>مقارنات أسرع وقرارات أكثر وضوحاً لإدارات المشتريات</li>
+            <li>تقليل العمل اليدوي ورفع كفاءة المتابعة والحوكمة</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section section-soft" id="features">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>الأدوات الأساسية داخل المنصة</h2>
+        <p>
+          المنصة مصممة لتغطي أهم سيناريوهات الشراء بين الشركات والموردين ضمن تجربة واحدة واضحة.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <article class="feature-card reveal">
+          <div class="icon">01</div>
+          <h3>الشراء المباشر</h3>
+          <p>
+            تنفيذ الطلبات ذات الأسعار أو الشروط الواضحة بسرعة أكبر، مع تقليل المراسلات اليدوية
+            وتوحيد المتابعة داخل المنصة.
+          </p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="icon">02</div>
+          <h3>طلبات عروض الأسعار RFQ</h3>
+          <p>
+            إرسال الطلب لعدة موردين، استقبال عروضهم، ثم عرضها بشكل منظم لتسهيل المقارنة واتخاذ القرار.
+          </p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="icon">03</div>
+          <h3>المناقصات</h3>
+          <p>
+            إنشاء فرص شرائية أكثر تنظيماً للطلبات الأكبر أو الأطول زمناً، مع خطوات أوضح للترسية والمتابعة.
+          </p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="icon">04</div>
+          <h3>السوق الإلكتروني</h3>
+          <p>
+            عرض منتجات وخدمات الموردين داخل بيئة B2B منظمة تساعد المشترين على الوصول إلى خيارات مناسبة بسرعة.
+          </p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="icon">05</div>
+          <h3>إدارة الموردين</h3>
+          <p>
+            قاعدة بيانات للموردين مع إمكانية تنظيم معلوماتهم، متابعتهم، وتصنيفهم بشكل يسهل على فريق الشراء العمل.
+          </p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="icon">06</div>
+          <h3>لوحات متابعة تنفيذية</h3>
+          <p>
+            رؤية أوضح لحالة الطلبات والفرص الشرائية والموردين من خلال Dashboard تساعد على اتخاذ قرارات أسرع.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKFLOW -->
+  <section class="section" id="workflow">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>كيف تعمل المنصة؟</h2>
+        <p>
+          تدفق بسيط ومنطقي من احتياج الشراء حتى استلام العروض واتخاذ القرار.
+        </p>
+      </div>
+
+      <div class="flow">
+        <div class="flow-step reveal">
+          <div class="flow-num">1</div>
+          <h3>إنشاء الطلب</h3>
+          <p>تقوم الشركة بإنشاء طلب شراء أو RFQ أو مناقصة بحسب نوع الحاجة الشرائية.</p>
+        </div>
+
+        <div class="flow-step reveal">
+          <div class="flow-num">2</div>
+          <h3>دعوة الموردين</h3>
+          <p>يتم توجيه الفرصة إلى الموردين المناسبين أو عرضها داخل بيئة السوق الإلكتروني.</p>
+        </div>
+
+        <div class="flow-step reveal">
+          <div class="flow-num">3</div>
+          <h3>استقبال العروض</h3>
+          <p>يتقدم الموردون بعروضهم داخل المنصة بدلاً من التشتت بين الرسائل والملفات اليدوية.</p>
+        </div>
+
+        <div class="flow-step reveal">
+          <div class="flow-num">4</div>
+          <h3>المراجعة والترسية</h3>
+          <p>يقوم فريق الشراء بالمقارنة واتخاذ القرار ومتابعة حالة الطلب من مكان واحد.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>لمن صُممت SupplyGate؟</h2>
+        <p>
+          لأن المنصة ليست مجرد كتالوج، بل طبقة تشغيلية لإدارة المشتريات بين أطراف متعددة.
+        </p>
+      </div>
+
+      <div class="audience-grid">
+        <div class="audience-card reveal">
+          <h3>الشركات المشترية</h3>
+          <ul>
+            <li>إدارات المشتريات</li>
+            <li>المجموعات والشركات متعددة الفروع</li>
+            <li>الجهات التي تبحث عن ضبط دورة الشراء</li>
+          </ul>
+        </div>
+
+        <div class="audience-card reveal">
+          <h3>الموردون</h3>
+          <ul>
+            <li>الشركات الراغبة في الوصول إلى فرص شرائية منظمة</li>
+            <li>الموردون الذين يريدون عرض منتجاتهم وخدماتهم مهنياً</li>
+            <li>المصانع والموزعون ومقدمو الخدمات</li>
+          </ul>
+        </div>
+
+        <div class="audience-card reveal">
+          <h3>المنظمات ذات الشراء المتكرر</h3>
+          <ul>
+            <li>القطاعات ذات حجم طلبات مستمر</li>
+            <li>الكيانات التي تحتاج حوكمة ومتابعة أوضح</li>
+            <li>الفرق التي تريد تقليل الفاقد التشغيلي</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="section">
+    <div class="container">
+      <div class="trust-wrap reveal">
+        <div class="trust-head">
+          <h2>ثقة أعلى لأن المشتريات لا تحتمل الفوضى</h2>
+          <p>
+            المنصة موجهة لبيئات أعمال تحتاج وضوحاً، احترافية، ومساراً قابلاً للتوسع. لذلك تم
+            بناء الرسالة حول الحوكمة والتنظيم والكفاءة، لا حول وعود مبالغ فيها.
+          </p>
+        </div>
+
+        <div class="trust-grid">
+          <div class="trust-item">
+            <h3>بيئة B2B احترافية</h3>
+            <p>واجهة موجهة للشركات والموردين وليست تجربة استهلاكية عامة.</p>
+          </div>
+          <div class="trust-item">
+            <h3>تنظيم دورة الشراء</h3>
+            <p>تقليل الاعتماد على الأدوات المتفرقة والمراسلات غير المركزية.</p>
+          </div>
+          <div class="trust-item">
+            <h3>قابلية للتوسع</h3>
+            <p>المنصة قابلة للتطوير لتشمل مزيداً من الأدوات والسيناريوهات الشرائية.</p>
+          </div>
+          <div class="trust-item">
+            <h3>مناسبة للإطلاق التجاري</h3>
+            <p>رسالة واضحة تساعد على تقديم الفكرة للشركاء والعملاء المحتملين والمستثمرين.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREVIEW -->
+  <section class="section section-soft" id="preview">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>تصور واجهة المنصة</h2>
+        <p>
+          ضع هنا Screenshot حقيقي أو Mockup لواجهة لوحة التحكم. هذه الجزئية ترفع الإقناع بشكل واضح،
+          لأن الزائر يرى كيف ستبدو المنصة فعلياً.
+        </p>
+      </div>
+
+      <div class="preview-box reveal">
+        <div class="preview-placeholder">
+          <div>
+            <h3>ضع لقطة شاشة للمنصة هنا</h3>
+            <p>
+              يمكنك استبدال هذا الجزء بصورة Dashboard أو واجهة المناقصات أو صفحة الموردين.
+              فقط استبدل هذا البلوك بصورة حقيقية داخل &lt;img&gt; أو background-image.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="cta-box reveal">
+        <div class="cta-grid">
+          <div class="cta-copy">
+            <div class="tag">
+              <span class="dot"></span>
+              التسجيل المبكر
+            </div>
+
+            <h2>اطلب عرضاً توضيحياً أو سجّل اهتمامك بالمنصة</h2>
+            <p>
+              إذا كنت مهتماً باستخدام SupplyGate داخل شركتك أو ترغب في مناقشة فرص التعاون،
+              يمكنك ترك بياناتك وسنقوم بالتواصل معك.
+            </p>
+
+            <ul class="cta-list">
+              <li>للشركات الباحثة عن تنظيم عمليات الشراء</li>
+              <li>للموردين الراغبين في الوصول إلى فرص شرائية</li>
+              <li>للشركاء والمستثمرين المهتمين بالمنصة</li>
+            </ul>
+          </div>
+
+          <form class="form" onsubmit="event.preventDefault(); alert('تم استلام طلبك مبدئياً. اربط النموذج مستقبلاً عبر Formspree أو أي Backend.');">
+            <h3>نموذج التواصل</h3>
+
+            <div class="field">
+              <label for="name">الاسم</label>
+              <input id="name" type="text" placeholder="اكتب الاسم الكامل" required>
+            </div>
+
+            <div class="field">
+              <label for="company">اسم الشركة</label>
+              <input id="company" type="text" placeholder="اسم المنشأة أو الشركة" required>
+            </div>
+
+            <div class="field">
+              <label for="email">البريد الإلكتروني</label>
+              <input id="email" type="email" placeholder="name@company.com" required>
+            </div>
+
+            <div class="field">
+              <label for="message">نبذة مختصرة</label>
+              <textarea id="message" placeholder="اذكر باختصار نوع اهتمامك: عرض تجريبي، شراكة، تسجيل كمورد..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">إرسال الطلب</button>
+            <small>هذه نسخة واجهة أولية. اربط النموذج لاحقاً بخدمة مثل Formspree أو Netlify Forms أو Backend مخصص.</small>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <p>© 2026 SupplyGate. جميع الحقوق محفوظة.</p>
+      <div class="footer-links">
+        <a href="#hero">الرئيسية</a>
+        <a href="#features">الحلول</a>
+        <a href="#preview">واجهة المنصة</a>
+        <a href="#contact">تواصل معنا</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const revealItems = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealItems.forEach(item => observer.observe(item));
+  </script>
+</body>
+</html>
